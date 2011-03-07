@@ -2,7 +2,7 @@
 PNGQR (Ping-queer?)
 -------------------
 
-Ruby Gem to generate PNG files with QR codes in them.
+Pure Ruby Gem to generate PNG files of QR codes.
 
 
 
@@ -12,13 +12,19 @@ Usage
 Example:
 
   require 'pngqr'
-  File.open('out.png','wb') {|io| io << Pngqr.encode('https://github.com/andys') }
 
-The parameters for encode() are the same as the rqrcode gem's new().
+  Pngqr.encode 'https://github.com/andys', :file => 'output.png'
+
+The parameters for encode() are the same as the rqrcode gem's new(), except:
+1. we add :file if you want to output to a file instead of returning the PNG as
+a blob, and
+2. you can :scale with an integer parameter and it will scale up the output
+image by that many times.
 See: http://whomwah.github.com/rqrcode/
 
 
-Requirements
+
+Dependencies
 ------------
 
 Gems: rqrcode and chunky_png (both pure ruby gems)
