@@ -1,0 +1,34 @@
+
+PNGQR (Ping-queer?)
+-------------------
+
+Ruby Gem to generate PNG files with QR codes in them.
+
+
+
+Usage
+-----
+
+Example:
+
+  require 'pngqr'
+  File.open('out.png','wb') {|io| io << Pngqr.encode('https://github.com/andys') }
+
+The parameters for encode() are the same as the rqrcode gem's new().
+See: http://whomwah.github.com/rqrcode/
+
+
+Requirements
+------------
+
+Gems: rqrcode and chunky_png (both pure ruby gems)
+
+
+
+
+Contact the author
+------------------
+
+Andrew Snow <andrew@modulus.org>
+Andys^ on irc.freenode.net
+@andy_snow on the twitter
