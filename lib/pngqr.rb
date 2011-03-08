@@ -6,12 +6,11 @@ class Pngqr
   class << self
 
     def encode(*opts)
-      @filename = nil
-      @scale = 1
       if Hash===opts.last
         @filename = opts.last.delete(:file) 
         @scale = opts.last.delete(:scale)
       end
+      @scale ||= 1
 
       qr = RQRCode::QRCode.new(*opts)
       len = qr.module_count
