@@ -16,18 +16,25 @@ Example:
   Pngqr.encode 'https://github.com/andys', :file => 'output.png'
 
 The parameters for encode() are the same as the rqrcode gem's new(), except:
+
 1. we add :file if you want to output to a file instead of returning the PNG as
 a blob, and
+
 2. you can :scale with an integer parameter and it will scale up the output
 image by that many times.
-See: http://whomwah.github.com/rqrcode/
 
+3. if you don't supply a :size, we auto-size by testing each size until we
+find the one that worked.  It seems quick enough.
+
+4. :border=>n lets you add an n pixel white border to the PNG
 
 
 Dependencies
 ------------
 
 Gems: rqrcode and chunky_png (both pure ruby gems)
+
+See: http://whomwah.github.com/rqrcode/
 
 
 
