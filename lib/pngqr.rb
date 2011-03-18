@@ -18,13 +18,13 @@ class Pngqr
 
       qr = nil
       if(opthash[:size]) # user supplied size
-        qr = RQRCode::QRCode.new(*opts, opthash)
+        qr = RQRCode::QRCode.new(*(opts + [opthash]))
       else
         # autosize algorithm: start at size=1 and increment until it worked
         opthash[:size] = 1
         while qr.nil?
           qr = begin
-            RQRCode::QRCode.new(*opts, opthash)
+            RQRCode::QRCode.new(*(opts + [opthash]))
           rescue RQRCode::QRCodeRunTimeError => e
             opthash[:size] += 1
             raise unless e.to_s =~ /overflow/ && opthash[:size] <= 40

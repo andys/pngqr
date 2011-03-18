@@ -3,3 +3,4 @@ Manifest
 README
 Rakefile
 lib/pngqr.rb
+test/test_all.rb
