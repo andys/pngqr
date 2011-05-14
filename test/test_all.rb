@@ -1,6 +1,12 @@
-
-require '../lib/pngqr'
-require 'qrscanner'
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/pngqr'))
+begin
+  require 'qrscanner'
+rescue LoadError
+  begin
+    require 'zxing'
+  rescue LoadError
+  end
+end
 require 'test/unit'
 require 'tempfile'
 
@@ -16,16 +22,16 @@ class TestPngqr < Test::Unit::TestCase
     assert_encoded_equals_decoded('y'*100, :size => 20)
     assert_encoded_equals_decoded('y'*1000, :size => 40)
   end
-  
+
   def test_scale
     assert_encoded_equals_decoded('hello, world', :scale => 5)
   end
-  
+
   def test_border
     assert_encoded_equals_decoded('hello, world', :border => 5)
   end
 
-  
+
   protected
   def assert_encoded_equals_decoded(*opts)
     begin
@@ -33,11 +39,17 @@ class TestPngqr < Test::Unit::TestCase
       @tempfile = Tempfile.new(self.class.to_s)
       @tempfile.write(Pngqr.encode(*opts))
       @tempfile.close
-      assert_equal str, QrScanner.decode(@tempfile.path)
+      if Object.const_defined? :QrScanner
+        assert_equal str, QrScanner.decode(@tempfile.path)
+      elsif Object.const_defined? :ZXing
+        assert_equal str, ZXing.decode(@tempfile)
+      else
+        raise Exception, "QR Decoder required. Please gem install qrscanner or zxing."
+      end
     ensure
       @tempfile.unlink if @tempfile
     end
   end
-    
+
 end
 
