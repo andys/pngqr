@@ -42,10 +42,12 @@ class Pngqr
         end
       end
       
+      blob = png.to_blob(:fast_rgb)
+      blob = blob.force_encoding('ASCII-8BIT') if blob.respond_to?(:force_encoding)
       if @filename
-        File.open(@filename, 'wb') {|io| io << png.to_blob(:fast_rgb) }
+        File.open(@filename, 'wb') {|io| io << blob }
       else
-        png.to_blob(:fast_rgb)
+        blob
       end
     end
   
